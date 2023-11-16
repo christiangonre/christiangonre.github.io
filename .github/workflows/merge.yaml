@@ -1,0 +1,37 @@
+name: "Comprobacion fichero"
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check-file-content:
+    name: "Check file content"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Check file content
+        run: |
+          set +e
+
+          cat index.html | grep Hola
+          exit_code=$?
+
+          if [ $exit_code != 0 ]; then
+            echo "No se ha encontrado el texto en el fichero, por favor corríjalo."
+            exit $exit_code
+          fi
+        
+      - name: regex-match-file
+        uses: noahreinalter/regex-match-file@latest
+        with:
+          # The regex pattern you want to use as a string
+          regex_pattern: 'hola'
+          # The path to the file as a string
+          path: 'index.html'
