@@ -20,7 +20,7 @@ jobs:
         run: |
           set +e
 
-          cat index.html | grep Hola
+          cat index.html | grep hola
           exit_code=$?
 
           if [ $exit_code != 0 ]; then
